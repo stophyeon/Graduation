@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: contest16-api-gateway-backend.kr.ncr.ntruss.com/api-gateway:latest
+          ports:
+            - containerPort: 8888
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/application.yml
+              subPath: application.yml
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: "optional:file:/config/application.yml"
+      volumes:
+        - name: config-volume
+          configMap:
+            name: apigw-config
+            items:
+              - key: application.yml
+                path: application.yml
