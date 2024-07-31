@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: contest16-api-gateway-backend.kr.ncr.ntruss.com/api-gateway:latest
+          image: stophyeon/graduate:api-gw
           ports:
             - containerPort: 8888
           volumeMounts:
