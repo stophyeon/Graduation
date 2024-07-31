@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: member-service
-          image: stophyeon/graduation:member
+          image: stophyeon/graduate:member
           ports:
             - containerPort: 8081
           volumeMounts:
