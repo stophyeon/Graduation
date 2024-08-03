@@ -15,6 +15,7 @@ spec:
       containers:
         - name: api-gateway
           image: stophyeon/graduate:api-gw
+          imagePullPolicy: Always
           ports:
             - containerPort: 8888
           volumeMounts:
