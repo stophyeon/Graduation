@@ -59,6 +59,7 @@ public class KakaoService {
 
     public KakaoToken getToken(String code) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
+
         KakaoToken kakaoToken=objectMapper.readValue(kakaoFeign.getAccessToken(Content_type,grant_type,client_id,login_redirect,code,secret), KakaoToken.class);
         log.info(kakaoToken.toString());
         kakaoToken_user=kakaoToken;
