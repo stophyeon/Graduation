@@ -35,13 +35,11 @@ public class JwtAuthenticationGatewayFilterFactory extends AbstractGatewayFilter
         return (exchange, chain) -> {
             String authorizationHeader = exchange.getRequest().getHeaders().getFirst(config.header);
             if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith(config.grant+" ")) {
-                String token = authorizationHeader.substring(7); // Bearer
-                log.info(token);
+                String token = authorizationHeader.substring(7);
                 try {
                     if (jwtValid.validateToken(token)) {
                         TokenUser user = jwtValid.decode(token);
                         log.info(user.getId());
-                        log.info(user.getRole());
                         ServerWebExchange req= exchange.mutate()
                                 .request(addAuthorization(exchange.getRequest(), user))
                                 .build();

@@ -24,7 +24,7 @@ public class GlobalExceptionHandler  implements ErrorWebExceptionHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-        log.info("global 예외 처리 동작");
+
         log.info(ex.getMessage());
         if (ex instanceof ExpiredJwtException) {
             log.info("토큰 만료 예외 처리 동작");
