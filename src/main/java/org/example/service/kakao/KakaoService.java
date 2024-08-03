@@ -49,6 +49,7 @@ public class KakaoService {
     private final String secret ="O1o1d7oxGIq1tTjak2wIU3b9ivPgxe5h";
     private KakaoToken kakaoToken_user;
     public JwtDto GenerateToken(String code) throws ParseException, IOException, org.json.simple.parser.ParseException {
+        log.info("카카오로그인 토큰");
         String email = OAuthSignUp(code);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,"default1234");
         Authentication authentication = authenticationProvider.authenticate(token);
