@@ -26,11 +26,10 @@ public class RedisSubscriber  implements MessageListener {
     public void onMessage(Message message, byte[] pattern) {
         try {
             String publishMessage = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
-            log.info("Received message: {}", publishMessage);  // 수신된 메시지를 로깅
+            log.info("Received message: {}", publishMessage);
 
             Chatting roomMessage = objectMapper.readValue(publishMessage, Chatting.class);
-            log.info("Deserialized message: {}", roomMessage.getContent());  // 역직렬화된 메시지를 로깅
-
+            log.info("Deserialized message: {}", roomMessage.getContent());
 
             messagingTemplate.convertAndSend("/sub/chat/room/" + roomMessage.getRoomId(), roomMessage);
         } catch (Exception e) {

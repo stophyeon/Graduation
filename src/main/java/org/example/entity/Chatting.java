@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.Id;
 import lombok.*;
+import org.example.dto.Message;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -28,5 +29,12 @@ public class Chatting {
         this.content = content;
         this.sendDate = sendDate;
         this.readCount = readCount;
+    }
+    public static Message toDto(Chatting chatting){
+        return Message.builder()
+                .sender(chatting.getSenderName())
+                .content(chatting.getContent())
+                .chatRoomId(chatting.getRoomId())
+                .build();
     }
 }

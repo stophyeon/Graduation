@@ -1,16 +1,12 @@
 package org.example.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.example.entity.Chatting;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
-@Getter
-@ToString
+
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
