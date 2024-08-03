@@ -84,21 +84,19 @@ public class KakaoService {
                 .userName(properties.get("nickname").toString())
                 .password(passwordEncoder.encode("default1234"))
                 .socialType(1)
-                .role("ROLE_TEACHER")
+                .memberInfo("안녕하세요")
+                .role("ROLE_MEMBER")
                 .build();
-        log.info(memberDto.getRole());
-        log.info(passwordEncoder.encode("default1234"));
+
         Optional<Member> member = memberRepository.findByEmail(memberDto.getEmail());
         Member member1 = Member.builder()
                 .memberDto(memberDto)
                 .build();
+
         if (member.isEmpty()){
-            log.info(member1.getRole());
             memberRepository.save(member1);
         }
        else {memberRepository.updateInfo(member1);}
-       log.info("User DB 저장");
-
        return memberDto.getEmail();
     }
 
