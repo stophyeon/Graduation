@@ -15,6 +15,7 @@ spec:
       containers:
         - name: member-service
           image: stophyeon/graduate:member
+          imagePullPolicy: Always
           ports:
             - containerPort: 8081
           volumeMounts:
