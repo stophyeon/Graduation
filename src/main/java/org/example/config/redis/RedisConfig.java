@@ -1,6 +1,6 @@
 package org.example.config.redis;
 
-import org.example.entity.ChatRoom;
+
 import org.example.service.RedisSubscriber;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -37,10 +37,6 @@ public class RedisConfig {
         return new LettuceConnectionFactory(redisHost, redisPort);
     }
 
-    @Bean
-    public ChannelTopic channelTopic(String room) {
-        return new ChannelTopic("chatroom:"+room);
-    }
 
     @Bean
     public MessageListenerAdapter listenerAdapterChatMessage(RedisSubscriber subscriber) {
@@ -48,33 +44,26 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisMessageListenerContainer redisMessage(
-            RedisConnectionFactory connectionFactory,
-            MessageListenerAdapter listenerAdapterChatMessage,
-            ChannelTopic channelTopic
-    ){
+    public RedisMessageListenerContainer redisMessage(){
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.addMessageListener(listenerAdapterChatMessage, channelTopic);
+        container.setConnectionFactory(redisConnectionFactory());
         return container;
     }
 
 
 
     @Bean
-    public RedisTemplate<String, Object> chatRoomRedisTemplate(RedisConnectionFactory connectionFactory) {
+    public RedisTemplate<String, Object> chatRoomRedisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
-
+        template.setConnectionFactory(redisConnectionFactory());
         // Use StringRedisSerializer for keys
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
 
         // Use Jackson2JsonRedisSerializer for ChatRoom values
-        Jackson2JsonRedisSerializer<ChatRoom> serializer = new Jackson2JsonRedisSerializer<>(ChatRoom.class);
+        Jackson2JsonRedisSerializer<String> serializer = new Jackson2JsonRedisSerializer<>(String.class);
         template.setValueSerializer(serializer);
         template.setHashValueSerializer(serializer);
-
         return template;
     }
 
