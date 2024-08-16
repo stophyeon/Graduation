@@ -6,6 +6,7 @@ package org.example.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.*;
+import org.example.dto.chat.ChatMember;
 import org.example.dto.exception.ExceptionResponse;
 import org.example.dto.login.LoginSuccessDto;
 import org.example.dto.member.MemberDto;
@@ -98,6 +99,8 @@ public class MemberController {
         return EmailDto.builder().email(memberService.getEmail(nickName)).build();
     }
 
-
-
+    @GetMapping("/info")
+    public ChatMember getMemberInfoForChat(@RequestParam("nick_name") String nickName){
+        return memberService.forChatting(nickName);
+    }
 }

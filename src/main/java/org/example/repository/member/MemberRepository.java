@@ -1,5 +1,6 @@
 package org.example.repository.member;
 
+import org.example.dto.chat.ChatMember;
 import org.example.dto.purchase.MemberForPay;
 import org.example.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +21,6 @@ public interface MemberRepository extends JpaRepository<Member,Long>, MemberRepo
     Optional<Member> findEmailByNickName(String nickName);
     boolean existsByEmail(String email);
 
-
     @Query("select new org.example.dto.purchase.MemberForPay("+
             "m.point, m.socialType)"+
             "from Member m where m.email= :email")
@@ -28,4 +28,9 @@ public interface MemberRepository extends JpaRepository<Member,Long>, MemberRepo
 
     @Query("SELECT m.point FROM Member m WHERE m.email = :email")
     Integer findPointByEmail(@Param("email") String email);
+
+    @Query("select new org.example.dto.chat.ChatMember("+
+            "m.email,m.nickName,m.role,m.profileImage,m.userName)"+
+            "from Member m where m.nickName= :nick_name")
+    ChatMember findChatMemberByNickName(@Param("nick_name") String nickName);
 }

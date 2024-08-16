@@ -34,7 +34,6 @@ public class Member {
     private int socialType;//0일반 1카카오
     private String memberInfo;
 
-
     @Builder
     public Member(MemberDto memberDto){
         this.email=memberDto.getEmail();
@@ -46,7 +45,6 @@ public class Member {
         this.socialType = memberDto.getSocialType();
         this.memberInfo=memberDto.getMemberInfo();
         this.role=memberDto.getRole();
-
     }
     public static MemberDto toDto(Member member){
         return MemberDto.builder()

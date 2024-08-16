@@ -41,7 +41,7 @@ public class KakaoService {
 
     private final String Content_type ="application/x-www-form-urlencoded;charset=utf-8";
     private final String grant_type = "authorization_code";
-    private final String client_id = "53e2138a4604fecace12418c569e9753";
+    private final String client_id = "b9759cba8e0cdd5bcdb9d601f5a10ac1";
     //private final String login_redirect ="http://default-front-84485-25569413-20a094b6a545.kr.lb.naverncp.com:30/user/login/oauth2/kakao";
     private final String login_redirect ="http://192.168.23.73:32319/user/login/oauth2/kakao";
     //private final String logout_redirect ="http://default-front-84485-25569413-20a094b6a545.kr.lb.naverncp.com:30";
@@ -49,7 +49,6 @@ public class KakaoService {
     private final String secret ="O1o1d7oxGIq1tTjak2wIU3b9ivPgxe5h";
     private KakaoToken kakaoToken_user;
     public JwtDto GenerateToken(String code) throws ParseException, IOException, org.json.simple.parser.ParseException {
-        log.info("카카오로그인 토큰");
         String email = OAuthSignUp(code);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,"default1234");
         Authentication authentication = authenticationProvider.authenticate(token);
@@ -84,19 +83,21 @@ public class KakaoService {
                 .userName(properties.get("nickname").toString())
                 .password(passwordEncoder.encode("default1234"))
                 .socialType(1)
-                .memberInfo("안녕하세요")
-                .role("ROLE_MEMBER")
+                .role("ROLE_TEACHER")
                 .build();
-
+        log.info(memberDto.getRole());
+        log.info(passwordEncoder.encode("default1234"));
         Optional<Member> member = memberRepository.findByEmail(memberDto.getEmail());
         Member member1 = Member.builder()
                 .memberDto(memberDto)
                 .build();
-
         if (member.isEmpty()){
+            log.info(member1.getRole());
             memberRepository.save(member1);
         }
        else {memberRepository.updateInfo(member1);}
+       log.info("User DB 저장");
+
        return memberDto.getEmail();
     }
 

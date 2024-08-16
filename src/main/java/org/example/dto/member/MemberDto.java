@@ -28,7 +28,6 @@ public class MemberDto {
     private String memberInfo;
     private String role;
 
-
     @Builder
     public MemberDto(String role,String memberInfo,String email, String nickName, String profileImage, String userName, String password, int follower, int following, int point, int socialType){
         this.email=email;
@@ -42,7 +41,6 @@ public class MemberDto {
         this.socialType = socialType;
         this.memberInfo= memberInfo;
         this.role=role;
-
     }
 
 }
