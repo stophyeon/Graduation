@@ -2,10 +2,7 @@ package org.example.service;
 
 import org.example.annotation.TimeCheck;
 import org.example.dto.SuccessRes;
-import org.example.dto.post.PostDetailRes;
-import org.example.dto.post.PostDto;
-import org.example.dto.post.PostForMessage;
-import org.example.dto.post.PostWishListCountDto;
+import org.example.dto.post.*;
 import org.example.dto.wish_list.EmailDto;
 import org.example.entity.Post;
 import org.example.entity.WishList;
@@ -49,34 +46,28 @@ public class PostService {
     }
 
     @Transactional
-    public Page<PostWishListCountDto> findPostPage (int page,String nickName){
-        Pageable pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "postId"));
+    public Page<PostDto> findPostPage (int page,String nickName){
+        Pageable pageable;
+        if(page==0) {pageable = PageRequest.of(page, 16, Sort.by(Sort.Direction.ASC, "postId"));}
+        else{pageable = PageRequest.of(page, 8, Sort.by(Sort.Direction.ASC, "postId"));}
         Page<Post> postPage = postRepository.findAll(pageable);
         Page<PostDto> posts=postPage.map(PostDto::ToDto);
-        Page<PostWishListCountDto> postWishListCountDtos = posts.map(post -> {
-            int wishlistCnt = 0;
-            if (nickName != null) {
-                Optional<EmailDto> email = memberFeign.getEmail(nickName);
-                email.orElseThrow();
-                List<PostDto> wishs = wishListRepository.findAllByEmail(email.get().getEmail()).get().stream().map(WishList::getPost).toList()
-                        .stream().map(PostDto::ToDto).toList();
-                posts.forEach(p -> p.setLike(wishs.contains(p)));
-            }
-            wishlistCnt= wishListRepository.countByPost_PostId(post.getPost_id());
-            log.info("postid"+post.getPost_id());
-            log.info(""+wishlistCnt);
-
-            return PostWishListCountDto.fromPostDto(post, wishlistCnt) ;
-        });
-
-        return postWishListCountDtos;
+        if (nickName!=null) {
+            Optional<EmailDto> email = memberFeign.getEmail(nickName);
+            List<PostDto> wishs = wishListRepository.findAllByEmail(email.get().getEmail()).get().stream().map(WishList::getPost).toList()
+                    .stream().map(PostDto::ToDto).toList();
+            posts.forEach(p -> p.setLike(wishs.contains(p)));
+        }
+        return posts;
     }
 
     @Transactional
-    public Page<PostWishListCountDto> findMyPostPage (String nickName,int page){
+    public Page<PostDto> findMyPostPage (String nickName,int page){
         Pageable pageable = PageRequest.of(page,8, Sort.by(Sort.Direction.ASC, "postId"));
-        Page<PostWishListCountDto> PostPage = postRepository.findAllByNickName(pageable,nickName);
-        return PostPage;
+        Page<Post> PostPage = postRepository.findAllByNickName(pageable,nickName);
+        Page<PostDto> PostPageDto = PostPage.map(PostDto::ToDto);
+//        Page<PostWishListCountDto> PostPage = postRepository.findAllByNickName(pageable,nickName);
+        return PostPageDto;
     }
 
     @Transactional
@@ -97,6 +88,13 @@ public class PostService {
     public PostDetailRes findPostDetail(Long postId,String email)
     {
         Post selectedPost = postRepository.findByPostId(postId);
+        PostDto selectedPostDto = PostDto.ToDto(selectedPost);
+
+        List<PostDto> wishsforselectpost = wishListRepository.findAllByEmail(email).get().stream().map(WishList::getPost).toList()
+                .stream().map(PostDto::ToDto).toList();
+        selectedPostDto.setLike(wishsforselectpost.contains(selectedPostDto));
+
+
         // 아래 null 값 반환을 빈 객체로 변경
         if (selectedPost.getState()==-1||selectedPost.getState()==0){return new PostDetailRes();}
         else {
@@ -116,12 +114,29 @@ public class PostService {
             PostDetailRes.setMe(selectedPost.getEmail().equals(email));
             if (topPosts.isEmpty()) {
                 List<Post> categoryPostList = postRepository.findByPostCategory(selectedPost.getCategoryId(), postId,PageRequest.of(0,9)) ;
-                PostDetailRes.setPost(selectedPost);
-                PostDetailRes.setPostList(categoryPostList);
+
+                //추가 부 - post dto list로 변경
+                List<PostDto> categoryPostDtoList = categoryPostList.stream().map(PostDto::ToDto).toList();
+                //각 dto list들에 대해, 접속자가 좋아요를 눌렀나 확인
+                List<PostDto> wishs = wishListRepository.findAllByEmail(email).get().stream().map(WishList::getPost).toList()
+                        .stream().map(PostDto::ToDto).toList();
+                categoryPostDtoList.forEach(p -> p.setLike(wishs.contains(p)));
+
+                PostDetailRes.setPost(selectedPostDto);
+                PostDetailRes.setPostList(categoryPostDtoList);
             }
             else {
-                PostDetailRes.setPost(selectedPost);
-                PostDetailRes.setPostList(topPosts);
+                PostDetailRes.setPost(selectedPostDto);
+
+                //추가 부 - topposts -> detail로 변경
+                List<PostDto> topPostsDto = topPosts.stream().map(PostDto::ToDto).toList();
+
+                //좋아요 확인
+                List<PostDto> wishs = wishListRepository.findAllByEmail(email).get().stream().map(WishList::getPost).toList()
+                        .stream().map(PostDto::ToDto).toList();
+                topPostsDto.forEach(p -> p.setLike(wishs.contains(p)));
+
+                PostDetailRes.setPostList(topPostsDto);
             }
             return PostDetailRes;
             // builder 패턴으로 객체 생성 코드 변경
@@ -165,30 +180,8 @@ public class PostService {
                 .build();
     }
 
-    //무한스크롤 조회 부
-    @Transactional
-    public Page<PostWishListCountDto> findPostPageInfiniteScroll (int page,String nickName,int pagesize){
-        Pageable pageable = PageRequest.of(page, pagesize, Sort.by(Sort.Direction.ASC, "postId"));
-        Page<Post> postPage = postRepository.findAll(pageable);
-        Page<PostDto> posts=postPage.map(PostDto::ToDto);
-        Page<PostWishListCountDto> postWishListCountDtos = posts.map(post -> {
-            int wishlistCnt = 0;
-            if (nickName != null) {
-                Optional<EmailDto> email = memberFeign.getEmail(nickName);
-                email.orElseThrow();
-                List<PostDto> wishs = wishListRepository.findAllByEmail(email.get().getEmail()).get().stream().map(WishList::getPost).toList()
-                        .stream().map(PostDto::ToDto).toList();
-                posts.forEach(p -> p.setLike(wishs.contains(p)));
-            }
-            wishlistCnt= wishListRepository.countByPost_PostId(post.getPost_id());
-            log.info("postid"+post.getPost_id());
-            log.info(""+wishlistCnt);
-
-            return PostWishListCountDto.fromPostDto(post, wishlistCnt) ;
-        });
-
-        return postWishListCountDtos;
+    public PostForChat getPostForChatting(String postId){
+        return postRepository.findPostForChatByPostId(Long.parseLong(postId));
     }
-
 
 }

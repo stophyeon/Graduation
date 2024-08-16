@@ -12,9 +12,7 @@ import java.time.LocalDate;
 
 public class PostDto {
     private Long post_id;
-
     private String post_name;
-
     private int price;
     private String email;
     private String image_post;
@@ -31,6 +29,7 @@ public class PostDto {
     @JsonProperty("user_profile")
     private String userProfile;
     private String location;
+
     @Builder
     public PostDto(Long post_id,String nick_name,String post_name, int price, LocalDate start_at, LocalDate end_at, String image_post, String post_info,int total_number, int category_id, String userProfile,int state,String email,boolean like,String location){
         this.category_id=category_id;

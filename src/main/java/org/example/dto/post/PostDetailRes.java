@@ -10,11 +10,11 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 public class PostDetailRes {
-    private Post post;
-    private List<Post> postList;
+    private PostDto post;
+    private List<PostDto> postList;
     private boolean me;
     @Builder
-    public PostDetailRes(Post post, List<Post> postList,boolean me){
+    public PostDetailRes(PostDto post, List<PostDto> postList,boolean me){
         this.post=post;
         this.postList=postList;
         this.me=me;

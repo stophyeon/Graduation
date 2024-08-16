@@ -7,10 +7,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.example.dto.post.PostDetailRes;
-import org.example.dto.post.PostDto;
-import org.example.dto.post.PostForMessage;
-import org.example.dto.post.PostWishListCountDto;
+import org.example.dto.gym.GymsDto;
+import org.example.dto.post.*;
 import org.example.dto.purchase.PaymentsReq;
 import org.example.dto.purchase.PurchaseDto;
 import org.example.dto.purchase.SellDto;
@@ -20,6 +18,7 @@ import org.example.service.MailService;
 import org.example.service.SearchService;
 import org.example.service.WishListService;
 import org.example.service.PostService;
+import org.example.service.gyms.GymService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +38,7 @@ public class PostController {
     private final WishListService wishListService;
     private final SearchService searchService;
     private final MailService mailService;
+    private final GymService gymService;
     // 게시글 작성 - email 필요
 
     @PostMapping("/{email}")
@@ -64,13 +64,13 @@ public class PostController {
     }
     // 페이징 형태로 변경
     @GetMapping("/page")
-    public ResponseEntity<Page<PostWishListCountDto>> getPostPage(@RequestParam(value = "page",required = false, defaultValue = "1") int page,
-                                                                  @RequestParam(value = "nick_name",required = false) String nick_name) {
-        return ResponseEntity.ok(postService.findPostPage(page-1,nick_name));
+    public ResponseEntity<Page<PostDto>> getPostPage(@RequestParam(value = "page",required = false, defaultValue = "0") int page,
+                                                     @RequestParam(value = "nick_name",required = false, defaultValue = "null") String nick_name) {
+        return ResponseEntity.ok(postService.findPostPage(page,nick_name));
     }
 
     @GetMapping("/mypage")
-    public ResponseEntity<Page<PostWishListCountDto>> getMyPostPage(@RequestParam(value = "page",required = false, defaultValue = "1") int page,@RequestParam("nick_name") String nickName) {
+    public ResponseEntity<Page<PostDto>> getMyPostPage(@RequestParam(value = "page",required = false, defaultValue = "1") int page,@RequestParam("nick_name") String nickName) {
         return ResponseEntity.ok(postService.findMyPostPage(nickName,page-1));
     }
     //게시글 1개 검색
@@ -112,19 +112,15 @@ public class PostController {
         return ResponseEntity.ok(searchService.autoComplete(searchDto.getWord()));
     }
 
-//    @PostMapping("/search")
-//    public ResponseEntity<Page<PostDto>> searchFullWord(@RequestBody SearchDto searchDto, @RequestParam(name = "page",required = false,defaultValue = "1") int page){
-//        return ResponseEntity.ok(searchService.searchPost(searchDto.getPost_name(), page-1));
-//    }
 
     @PostMapping("/search")
-    public ResponseEntity<Page<PostWishListCountDto>> searchFullWord
+    public ResponseEntity<Page<PostDto>> searchFullWord
             (@RequestBody SearchDto searchDto,
-             @RequestParam(name = "page",required = false,defaultValue = "1") int page,
+             @RequestParam(name = "page",required = false,defaultValue = "0") int page,
              @RequestParam(name = "category_id", required = false, defaultValue = "0") int category_id,
-             @RequestParam(name = "gender", required = false, defaultValue = "X") char gender,
-            @RequestParam(name = "location", required = false, defaultValue = "X") String location){
-        return ResponseEntity.ok(searchService.searchPost(searchDto.getPost_name(), page-1,category_id, gender, location));
+            @RequestParam(name = "location", required = false, defaultValue = "X") String location,
+            @RequestParam(name = "nick_name", required = false, defaultValue = "null") String nickName){
+        return ResponseEntity.ok(searchService.searchPost(searchDto.getPost_name(), page,category_id, location,nickName));
     }
 
     @PostMapping("/image")
@@ -141,19 +137,6 @@ public class PostController {
     public ResponseEntity<String> SendEmailToSell(@RequestBody List<PaymentsReq> paymentsReqList)
     {
         return ResponseEntity.ok(mailService.sendEmailToSeller(paymentsReqList));
-    }
-
-    //무한스크롤 최초 검색 부
-    @GetMapping("/page_post/default")
-    public ResponseEntity<Page<PostWishListCountDto>> getDefaultPostPage(@RequestParam(value = "nick_name",required = false) String nick_name) {
-        return ResponseEntity.ok(postService.findPostPageInfiniteScroll(0,nick_name,16));
-    }
-
-    @GetMapping("/page_post/scroll")
-    public ResponseEntity<Page<PostWishListCountDto>> getScrollPostPage(
-            @RequestParam(value = "page") int page_number,
-            @RequestParam(value = "nick_name",required = false) String nick_name) {
-        return ResponseEntity.ok(postService.findPostPageInfiniteScroll(page_number,nick_name,8));
     }
 
     @GetMapping("/notices")
@@ -173,4 +156,27 @@ public class PostController {
         }
         return ResponseEntity.ok(notices);
     }
+
+    //여기서 부터 변경 부
+    @GetMapping("/gyms/main")
+    public ResponseEntity<GymsDto> getGyms()
+    {
+        return ResponseEntity.ok(gymService.getGymsForMain());
+    }
+
+
+    @GetMapping("/gyms/all")
+    public ResponseEntity<GymsDto> getGymsAll(
+            @RequestParam(name = "location",required = false) String location
+    )
+    {
+        return ResponseEntity.ok(gymService.getGymsAllWithFilter(location));
+    }
+
+    @GetMapping("/chat")
+    public PostForChat getPostForChat(@RequestParam("post_id") String postId){
+        return postService.getPostForChatting(postId);
+    }
+
+
 }
