@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+
 import java.util.List;
 
 @Data
@@ -11,14 +12,12 @@ import java.util.List;
 public class ChatRoomMessage {
     private String roomName;
     private String roomId;
-    private int userCount;
-    private List<Message> chats;
+    private List<MessageRes> chats;
 
     @Builder
-    public ChatRoomMessage(String roomName, String room_id, int userCount, List<Message> chats) {
-        this.roomName = roomName;
-        this.roomId = room_id;
-        this.userCount = userCount;
-        this.chats = chats;
+    public ChatRoomMessage(String roomName,String room_id,List<MessageRes> chats){
+        this.roomName=roomName;
+        this.roomId=room_id;
+        this.chats=chats;
     }
 }

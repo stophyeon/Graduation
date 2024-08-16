@@ -10,7 +10,6 @@ import java.util.List;
 public interface RoomRepository extends MongoRepository<ChatRoom,String> {
 
     List<ChatRoom> findByUsersContaining(String email);
-    int findUserCountByRoom(String room);
-    List<String> findUsersByRoom(String roomId);
     ChatRoom findByRoom(String roomId);
+    boolean existsByRoom(String roomId);
 }

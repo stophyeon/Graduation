@@ -1,6 +1,8 @@
 package org.example.config.redis;
 
 
+
+import org.example.dto.MessageRes;
 import org.example.service.RedisSubscriber;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -11,7 +13,6 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
@@ -56,12 +57,13 @@ public class RedisConfig {
     public RedisTemplate<String, Object> chatRoomRedisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
-        // Use StringRedisSerializer for keys
+
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
 
-        // Use Jackson2JsonRedisSerializer for ChatRoom values
-        Jackson2JsonRedisSerializer<String> serializer = new Jackson2JsonRedisSerializer<>(String.class);
+
+        Jackson2JsonRedisSerializer<MessageRes> serializer = new Jackson2JsonRedisSerializer<>(MessageRes.class);
+
         template.setValueSerializer(serializer);
         template.setHashValueSerializer(serializer);
         return template;
