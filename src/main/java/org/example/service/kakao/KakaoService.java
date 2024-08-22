@@ -42,8 +42,8 @@ public class KakaoService {
     private final String Content_type ="application/x-www-form-urlencoded;charset=utf-8";
     private final String grant_type = "authorization_code";
     private final String client_id = "53e2138a4604fecace12418c569e9753";
-    private final String login_redirect ="http://192.168.23.73:32319/user/login/oauth2/kakao";
-    private final String logout_redirect ="http://192.168.23.73:32319";
+    private final String login_redirect ="http://192.168.23.102:32319/user/login/oauth2/kakao";
+    private final String logout_redirect ="http://192.168.23.102:32319";
     private final String secret ="O1o1d7oxGIq1tTjak2wIU3b9ivPgxe5h";
     private KakaoToken kakaoToken_user;
     public JwtDto GenerateToken(String code) throws ParseException, IOException, org.json.simple.parser.ParseException {
