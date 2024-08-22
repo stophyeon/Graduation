@@ -62,7 +62,7 @@ public class PostController {
                                                  @RequestBody PostDto postDto) throws IOException {
         return ResponseEntity.ok(postService.updatePost(postId,postDto,email));
     }
-    // 페이징 형태로 변경
+
     @GetMapping("/page")
     public ResponseEntity<Page<PostDto>> getPostPage(@RequestParam(value = "page",required = false, defaultValue = "0") int page,
                                                      @RequestParam(value = "nick_name",required = false, defaultValue = "null") String nick_name,
