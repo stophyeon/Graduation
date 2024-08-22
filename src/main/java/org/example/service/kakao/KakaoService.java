@@ -41,10 +41,8 @@ public class KakaoService {
 
     private final String Content_type ="application/x-www-form-urlencoded;charset=utf-8";
     private final String grant_type = "authorization_code";
-    private final String client_id = "b9759cba8e0cdd5bcdb9d601f5a10ac1";
-    //private final String login_redirect ="http://default-front-84485-25569413-20a094b6a545.kr.lb.naverncp.com:30/user/login/oauth2/kakao";
+    private final String client_id = "53e2138a4604fecace12418c569e9753";
     private final String login_redirect ="http://192.168.23.73:32319/user/login/oauth2/kakao";
-    //private final String logout_redirect ="http://default-front-84485-25569413-20a094b6a545.kr.lb.naverncp.com:30";
     private final String logout_redirect ="http://192.168.23.73:32319";
     private final String secret ="O1o1d7oxGIq1tTjak2wIU3b9ivPgxe5h";
     private KakaoToken kakaoToken_user;
@@ -82,11 +80,10 @@ public class KakaoService {
                 .nickName(properties.get("nickname").toString())
                 .userName(properties.get("nickname").toString())
                 .password(passwordEncoder.encode("default1234"))
+                .memberInfo("안녕하세요 신규 회원입니다.")
                 .socialType(1)
                 .role("ROLE_TEACHER")
                 .build();
-        log.info(memberDto.getRole());
-        log.info(passwordEncoder.encode("default1234"));
         Optional<Member> member = memberRepository.findByEmail(memberDto.getEmail());
         Member member1 = Member.builder()
                 .memberDto(memberDto)

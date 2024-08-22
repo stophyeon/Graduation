@@ -33,16 +33,15 @@ public class NaverService {
     private final MemberRepository memberRepository;
     private final AuthenticationProvider authenticationProvider;
     private final PasswordEncoder passwordEncoder;
-    private final String client_id="3OGCudku4yOAQaRE_ou3";
-    private final String redirect_uri="http%3a%2f%2flocalhost%3a8080%2foauth2%2fnaver";
-    //url 인코딩 값
-    private final String client_secret="gVeTyZ76l7";
+    private final String client_id="CA8wF_4edL4Qk3n2PtRR";
+    private final String redirect_uri="http://http://192.168.23.73:32319";
+    private final String client_secret="GS__Y_1f8W";
     private final String grant_type="authorization_code";
-    //1) 발급:'authorization_code'
-    //2) 갱신:'refresh_token'
-    //3) 삭제: 'delete'
-    private final String state="1234";
+    private final String state="default1234";
+    private NaverToken naverToken_user;
     public JwtDto GenerateToken(String code) throws ParseException, IOException, org.json.simple.parser.ParseException {
+        log.info("네이버 로그인");
+        log.info(code);
         String email = OAuthSignUp(code);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,"default1234");
         Authentication authentication = authenticationProvider.authenticate(token);
@@ -50,8 +49,8 @@ public class NaverService {
     }
     public NaverToken getAccessToken(String code) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        NaverToken naverToken=objectMapper.readValue(naverFeign.getToken(client_id,client_secret,grant_type,code), NaverToken.class);
-        log.info(naverToken.getAccessToken());
+        NaverToken naverToken=objectMapper.readValue(naverFeign.getToken(client_id,client_secret,grant_type,code,state), NaverToken.class);
+        naverToken_user = naverToken;
         return naverToken;
     }
 
@@ -64,13 +63,16 @@ public class NaverService {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(user);
         JSONObject response=(JSONObject) jsonObject.get("response");
-
+        log.info(response.toJSONString());
         MemberDto memberDto =MemberDto.builder()
                 .email(response.get("email").toString())
                 .profileImage(response.get("profile_image").toString())
                 .userName(response.get("name").toString())
+                .role("ROLE_MEMBER")
+                .memberInfo("안녕하세요 신규 회원입니다.")
+                .nickName("네이버 로그인"+response.get("name").toString())
                 .password(passwordEncoder.encode("default1234"))
-                .socialType(2)
+                .socialType(0)
                 .build();
 
         Optional<Member> member = memberRepository.findByEmail(memberDto.getEmail());
