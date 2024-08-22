@@ -39,7 +39,7 @@ public class PostController {
     private final SearchService searchService;
     private final MailService mailService;
     private final GymService gymService;
-    // 게시글 작성 - email 필요
+
 
     @PostMapping("/{email}")
     public ResponseEntity<SuccessRes> savePost(@PathVariable("email") String email,
