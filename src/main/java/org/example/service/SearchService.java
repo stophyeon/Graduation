@@ -49,13 +49,11 @@ public class SearchService {
 
         if(category_id == null && location == null)
         {
-            //둘다 null일땐,일반 조회합니다.
             postPage = postRepository.findByPostNamePage(postName,pageable);
         }else {
-            //category, location 중 하나라도 null이 아니라면, filter query를 사용합니다.
             postPage = postRepository.findPostsByCategoryAndLocation(postName,category_id,location,pageable);
         }
-        //주로 삼항연산자를 사용하시지만, 조금이라도 메소드를 편하게 보게 하고 싶어 이렇게 메소드 구성했습니다.
+
 
         Page<PostDto> posts= postPage.map(PostDto::ToDto);
         if (nickName!=null) {
