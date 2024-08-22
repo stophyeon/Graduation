@@ -51,6 +51,16 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                     @Param("post_info")String postIfo);
 
     Page<Post> findAll(Pageable pageable);
+    @Query("SELECT p FROM Post p WHERE " +
+            "(p.categoryId IN :categoryIds OR :categoryIds IS NULL) " +
+            "AND (p.location IN :locations OR :locations IS NULL) " +
+            "AND p.postName LIKE %:postName% " +
+            "ORDER BY p.postId ASC")
+    Page<Post> findPostsByCategoryAndLocation(
+            @Param("postName") String postName,
+            @Param("categoryIds") List<Integer> categoryIds,
+            @Param("locations") List<String> locations,
+            Pageable pageable);
 
     @Query("SELECT p FROM Post p WHERE p.categoryId IN :category_id")
     Page<Post> findAllByCategoryIds(Pageable pageable,@Param("category_id") List<Integer> categoryIds);
