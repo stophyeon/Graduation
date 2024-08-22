@@ -46,11 +46,27 @@ public class PostService {
     }
 
     @Transactional
-    public Page<PostDto> findPostPage (int page,String nickName){
+    public Page<PostDto> findPostPage (int page,String nickName,List<Integer> categoryIds, List<String> locations){
         Pageable pageable;
         if(page==0) {pageable = PageRequest.of(page, 16, Sort.by(Sort.Direction.ASC, "postId"));}
         else{pageable = PageRequest.of(page, 8, Sort.by(Sort.Direction.ASC, "postId"));}
-        Page<Post> postPage = postRepository.findAll(pageable);
+        Page<Post> postPage;
+        if(categoryIds==null && locations==null){
+            postPage = postRepository.findAll(pageable);
+        }
+        else if(categoryIds==null){
+            locations.forEach(System.out::println);
+            postPage = postRepository.findAllByLocations(pageable,locations);
+        }
+        else if(locations==null){
+            categoryIds.forEach(System.out::println);
+            postPage = postRepository.findAllByCategoryIds(pageable,categoryIds);
+        }
+        else{
+            locations.forEach(System.out::println);
+            categoryIds.forEach(System.out::println);
+            postPage = postRepository.findAllByCategoryIdsAndLocations(pageable,categoryIds,locations);
+        }
         Page<PostDto> posts=postPage.map(PostDto::ToDto);
         if (nickName!=null) {
             Optional<EmailDto> email = memberFeign.getEmail(nickName);
@@ -63,24 +79,24 @@ public class PostService {
 
     @Transactional
     public Page<PostDto> findMyPostPage (String nickName,int page){
-        Pageable pageable = PageRequest.of(page,8, Sort.by(Sort.Direction.ASC, "postId"));
+        Pageable pageable;
+        if(page==0) {pageable = PageRequest.of(page, 16, Sort.by(Sort.Direction.ASC, "postId"));}
+        else{pageable = PageRequest.of(page, 8, Sort.by(Sort.Direction.ASC, "postId"));}
         Page<Post> PostPage = postRepository.findAllByNickName(pageable,nickName);
-        Page<PostDto> PostPageDto = PostPage.map(PostDto::ToDto);
-//        Page<PostWishListCountDto> PostPage = postRepository.findAllByNickName(pageable,nickName);
-        return PostPageDto;
+        return PostPage.map(PostDto::ToDto);
     }
 
     @Transactional
     public SuccessRes deletePost(Long PostId, String email) throws IOException {
-            Post Post = postRepository.findByPostId(PostId);
-            if (Post.getEmail().equals(email)) {
-                ncpStorageService.imageDelete(PostId);
-                postRepository.delete(Post);
-                return new SuccessRes(Post.getPostName(), "삭제 성공");
-            }
-            else {
-                return new SuccessRes(Post.getPostName(), "등록한 이메일과 일치하지 않습니다.");
-            }
+        Post Post = postRepository.findByPostId(PostId);
+        if (Post.getEmail().equals(email)) {
+            ncpStorageService.imageDelete(PostId);
+            postRepository.delete(Post);
+            return new SuccessRes(Post.getPostName(), "삭제 성공");
+        }
+        else {
+            return new SuccessRes(Post.getPostName(), "등록한 이메일과 일치하지 않습니다.");
+        }
     }
 
     @TimeCheck

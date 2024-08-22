@@ -43,9 +43,9 @@ public class PostController {
 
     @PostMapping("/{email}")
     public ResponseEntity<SuccessRes> savePost(@PathVariable("email") String email,
-                                                  @RequestPart("req") PostDto PostDto,
-                                                  @RequestPart("img") MultipartFile img_post
-                                                 ) throws IOException {
+                                               @RequestPart("req") PostDto PostDto,
+                                               @RequestPart("img") MultipartFile img_post
+    ) throws IOException {
         log.info("상품 등록");
         return ResponseEntity.ok(postService.addPost(PostDto,email,img_post));
     }
@@ -58,20 +58,22 @@ public class PostController {
     // 게시글 수정 , email 필요, email 활용 검증 필요
     @PutMapping("/{post_id}/{email}")
     public ResponseEntity<SuccessRes> changePost(@PathVariable("email") String email,
-                                           @PathVariable("post_id") Long postId,
-                                           @RequestBody PostDto postDto) throws IOException {
+                                                 @PathVariable("post_id") Long postId,
+                                                 @RequestBody PostDto postDto) throws IOException {
         return ResponseEntity.ok(postService.updatePost(postId,postDto,email));
     }
     // 페이징 형태로 변경
     @GetMapping("/page")
     public ResponseEntity<Page<PostDto>> getPostPage(@RequestParam(value = "page",required = false, defaultValue = "0") int page,
-                                                     @RequestParam(value = "nick_name",required = false, defaultValue = "null") String nick_name) {
-        return ResponseEntity.ok(postService.findPostPage(page,nick_name));
+                                                     @RequestParam(value = "nick_name",required = false, defaultValue = "null") String nick_name,
+                                                     @RequestParam(name = "category_id", required = false) List<Integer> category_id,
+                                                     @RequestParam(name = "location", required = false) List<String> location) {
+        return ResponseEntity.ok(postService.findPostPage(page,nick_name,category_id,location));
     }
 
     @GetMapping("/mypage")
-    public ResponseEntity<Page<PostDto>> getMyPostPage(@RequestParam(value = "page",required = false, defaultValue = "1") int page,@RequestParam("nick_name") String nickName) {
-        return ResponseEntity.ok(postService.findMyPostPage(nickName,page-1));
+    public ResponseEntity<Page<PostDto>> getMyPostPage(@RequestParam(value = "page",required = false, defaultValue = "0") int page,@RequestParam("nick_name") String nickName) {
+        return ResponseEntity.ok(postService.findMyPostPage(nickName,page));
     }
     //게시글 1개 검색
     @GetMapping("/detail/{post_id}/{email}")
@@ -85,8 +87,8 @@ public class PostController {
     }
 
     @GetMapping("/profile/like/{nick_name}")
-    public ResponseEntity<WishListDto> getLikePost(@PathVariable("nick_name") String nickName){
-        return ResponseEntity.ok(wishListService.showLikePost(nickName));
+    public ResponseEntity<Page<PostDto>> getLikePost(@RequestParam(value = "page",required = false, defaultValue = "0") int page,@PathVariable("nick_name") String nickName){
+        return ResponseEntity.ok(wishListService.showLikePost(nickName,page));
     }
 
     @DeleteMapping("/like/{post_id}/{email}")
@@ -118,8 +120,8 @@ public class PostController {
             (@RequestBody SearchDto searchDto,
              @RequestParam(name = "page",required = false,defaultValue = "0") int page,
              @RequestParam(name = "category_id", required = false, defaultValue = "0") int category_id,
-            @RequestParam(name = "location", required = false, defaultValue = "X") String location,
-            @RequestParam(name = "nick_name", required = false, defaultValue = "null") String nickName){
+             @RequestParam(name = "location", required = false, defaultValue = "X") String location,
+             @RequestParam(name = "nick_name", required = false, defaultValue = "null") String nickName){
         return ResponseEntity.ok(searchService.searchPost(searchDto.getPost_name(), page,category_id, location,nickName));
     }
 
@@ -139,23 +141,7 @@ public class PostController {
         return ResponseEntity.ok(mailService.sendEmailToSeller(paymentsReqList));
     }
 
-    @GetMapping("/notices")
-    public ResponseEntity<JsonNode> getNotices() throws IOException {
-        //공지사항 전달 부 입니다.
-        //정적인걸 전달하는걸 service로 분리해서 의존성을 하나 올리는 것보다
-        //실제 동작 없이 파싱만 진행하므로 서비스 부 분리 없이 controller부에서 즉시 작성해 보았습니다.
-        ClassPathResource resource = new ClassPathResource("notice.json");
-        InputStream inputStream = resource.getInputStream();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode notices = objectMapper.readTree(inputStream);
-
-        String baseUrl = "/thumbnailfinal.jpg";
-        for (JsonNode notice : notices) {
-            ((ObjectNode) notice).put("thumbnail", baseUrl);
-        }
-        return ResponseEntity.ok(notices);
-    }
 
     //여기서 부터 변경 부
     @GetMapping("/gyms/main")
