@@ -8,7 +8,6 @@ import org.example.entity.Chatting;
 import org.example.repository.ChatRepository;
 import org.example.repository.CustomRoomRepository;
 import org.example.repository.RoomRepository;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
