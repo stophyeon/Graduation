@@ -15,6 +15,7 @@ spec:
       containers:
         - name: post-service
           image: stophyeon/graduate:post
+          imagePullPolicy: Always
           ports:
             - containerPort: 7080
           volumeMounts:
