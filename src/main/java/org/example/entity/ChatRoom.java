@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.example.dto.ChattingRoomRes;
 import org.example.dto.PostForChat;
-import org.example.dto.RoomDto;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;

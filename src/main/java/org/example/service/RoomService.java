@@ -6,9 +6,7 @@ import org.example.dto.*;
 import org.example.entity.ChatRoom;
 import org.example.entity.Chatting;
 import org.example.repository.ChatRepository;
-import org.example.repository.CustomRoomRepository;
 import org.example.repository.RoomRepository;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +20,6 @@ public class RoomService {
 
     private final ChatRepository chatRepository;
     private final RoomRepository roomRepository;
-    private final CustomRoomRepository customRoomRepository;
-    private final RedisSubscriber redisSubscriber;
-    private final RedisMessageListenerContainer redisMessageListenerContainer;
     private final MemberFeign memberFeign;
     private final PostFeign postFeign;
 

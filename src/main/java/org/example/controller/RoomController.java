@@ -3,7 +3,6 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.ChatRoomMessage;
 import org.example.dto.ChattingRoomRes;
-import org.example.dto.RoomDto;
 import org.example.service.RoomService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

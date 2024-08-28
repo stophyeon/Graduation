@@ -4,7 +4,6 @@ package org.example.entity;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.example.dto.ChatMember;
-import org.example.dto.MessageReq;
 import org.example.dto.MessageRes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
