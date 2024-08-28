@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.annotation.TimeCheck;
 
 import org.example.dto.post.PostDto;
-import org.example.dto.post.PostWishListCountDto;
 import org.example.dto.wish_list.EmailDto;
 import org.example.entity.Post;
 import org.example.entity.WishList;
@@ -15,10 +14,8 @@ import org.example.service.member.MemberFeign;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,13 +31,11 @@ public class SearchService {
         return postRepository.findByPostName(word).stream()
                 .map(Post::getPostName)
                 .toList();
-
     }
-
+    @TimeCheck
     public Page<PostDto> searchPost(String postName, int page, List<Integer> category_id, List<String> location,String nickName) {
         page = (page == 0) ? 0 : page+1;
         int pageSize = (page == 0) ? 16 : 8;
-        //offset으로 시도해 보았으나,jpql 사용 x시 쿼리가 너무너무 길어짐
         log.info("nickname="+nickName);
         log.info("category_id="+category_id);
         log.info("location="+location);
@@ -63,5 +58,8 @@ public class SearchService {
             posts.forEach(p -> p.setLike(wishs.contains(p)));
         }
         return posts;
+
     }
+
+
 }
