@@ -46,6 +46,7 @@ public class KakaoService {
     private final String logout_redirect ="http://192.168.23.102:32319";
     private final String secret ="O1o1d7oxGIq1tTjak2wIU3b9ivPgxe5h";
     private KakaoToken kakaoToken_user;
+
     public JwtDto GenerateToken(String code) throws ParseException, IOException, org.json.simple.parser.ParseException {
         String email = OAuthSignUp(code);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,"default1234");
