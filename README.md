@@ -1,71 +1,245 @@
-# PTFD
-![로고](https://github.com/user-attachments/assets/488e628b-1f33-41dd-86f9-dae5c359f75f)
+# 💻 PTFD
+![Frame 1](https://github.com/user-attachments/assets/338b7cfc-1a96-47e9-a645-1dd34154844e)
 
-> 장애인 PT 예약,문의 서비스
+## 0.💡 기획 의도
 
-> 배포 URL [[PTFD](http://default-front-84485-25569413-20a094b6a545.kr.lb.naverncp.com:30)]
+- 장애인은 비장애인에 비해 더욱 운동의 필요성을 느끼는 데에 비해 독립적인 체육 활동의 한계에 부딪혀 난관을 겪고 있습니다.
+- 장애인의 수는 2015년 이후로 꾸준히 늘어나고 있는 상태임에도 불구하고 장애인 생활 체육 관련 시설은 이용을 원하는 많은 이들에게 제대로 활용되지 못하고 있습니다.
+- 체육 활동을 희망하나, 혼자 운동하기 어려운 장애인들의 어려움을 해결하고자 했습니다.
+- 현재 장애인들이 자유로운 체육 활동을 할 수 있도록 돕는 시설 및 시스템에 대한 정보 제공이 충분하지 않아 대다수의 장애인들이 실행에 어려움을 겪고 있습니다.
+- IT기술을 활용하여 체육시설 정보 제공 및 장애인 전문 PT 강사 (스포츠지도사 등)를 장애인들에게 직접 연결하고, 이를 통해 장애인들의 편리한 체육 활동을 돕습니다.
 
-## 프로젝트
-- BackEnd 2/ FrontEnd 2
-- 개발 기간 2024.06.30 - 2024.09.01
-- 장애인 맞춤 PT 어플리케이션은 장애인의 건강과 웰빙을 위한 퍼스널 트레이닝(PT) 예약 및 관리를 간편하게 도와주는 서비스입니다. 이 어플리케이션을 통해 사용자는 편리하게 PT 세션을 예약하고 결제할 수 있으며, 개인의 요구에 맞춘 트레이닝을 경험할 수 있습니다. PT 강사와의 실시간 채팅 기능을 통해 트레이닝 전후로 궁금한 사항을 해결하고, 피드백을 받을 수 있습니다.
+## 1.📱 PTFD 소개
 
-## 팀원소개
-| **정지현** | **임지혁** | **신민재** | **김민우** |
-| ---------- | ---------- | ---------- |------------|
-| ![정지현](https://github.com/user-attachments/assets/fafc64d6-822a-40fc-b95a-4ba787bda859) | ![임지혀](https://github.com/user-attachments/assets/7ad081ee-1908-4dd7-9dbc-9d99a9287edb) | ![신민재](https://github.com/user-attachments/assets/b5c36a1c-c2d0-4a34-a40e-ad1b49f402d5) | ![kmw2](https://github.com/user-attachments/assets/da799522-3d1f-4535-8a9c-c398c0b43f38) |
-| **백엔드** | **백엔드** | **프론트엔드** | **프론트엔드** |
+**Personal Training For Disabled(PTFD)** 는 체육 활동을 희망하지만 정신적 또는 신체적인 문제로 인해 혼자서 체육활동을 하지 못하였던 장애인들에게 저문 PT 강사를 연결해주는 플랫폼입니다.
 
-- 정지현 - 백엔드 개발(Member,Post,Chatting), 어플리케이션 배포, DB 설계
-- 임지혁 - 백엔드 개발(Purchase, Post), CI/CD 파이프라인 구축
-- 신민재 - 프론트 개발, 웹 디자인
-- 김민우 - 프론트 개발
+PTFD는 전문 강사가 게시한 PT 강좌를 **검색**, **예약**, **결제** 할 수 있는 기능과 **유사 강좌 추천기능**, **지역별 체육시설 검색** 및 **길찾기와 실시간 채팅**을 통한 문의 기능 등을 제공합니다.
 
 
-## 개발 환경
-- IDE - <img src="https://img.shields.io/badge/intellij-041E42?style=for-the-badge&logo=intellijidea&logoColor=white"> <img src="https://img.shields.io/badge/visual studio code-4B8BF5?style=for-the-badge&logo=v&logoColor=black"> <img src="https://img.shields.io/badge/naver cloud-00BC8E?style=for-the-badge&logo=icloud&logoColor=black">
-- FrontEnd Skill - <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white">
-- BackEnd Skill - <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/spring data jpa-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/spring cloud-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/stomp-041E42?style=for-the-badge&logo=socketdotio&logoColor=white">
-- DataBase - <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white"> <img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=redis&logoColor=white"> 
-- Cloud - <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white"> 
-- 협업 - <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> 
+이를 통해 체육 시설 비 이용 장애인들의 가장 큰 이유인 '혼자 운동하기 어렵다'(29.9%)라는 문제를 해결하여, 장애인들의 체육 활동 참여율을 향상시키고자 합니다.
+<br />
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/07912a09-d241-49df-a7e3-f3b0c9389ac7" alt="자료화면1" align="center"/>
+</div>
 
-## 아키텍쳐
-![아키텍처](https://github.com/user-attachments/assets/99f25eea-bec4-4140-8b95-ec1b4f83e6ef)
+<br />
 
-## 서비스 흐름도
-![1](https://github.com/user-attachments/assets/25545ad8-bbb2-47cf-82a7-74a8c66a1625)
+또한, 장애인 체육 활동 관련 정책과 주변 장애인 전용 체육시설 정보를 제공함으로써, 77%의 장애인이 '장애인 생활 체육 관련 정보를 들어본 적이 없다'는 정보 접근의 불평등을 해결하고자 합니다.
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/5b73d7c4-fe7c-4160-93bd-e9dab0e42850" alt="자료 사진2" align="center"/>
+</div>
+<br />
 
-- ① 장애인 체육 시설 확인 : 로그인 하지 않아도 전국에 있는 장애인 전용 체육 시설의 위치, 
-    웹사이트, 번호 등을 카카오맵 화면과 함께 확인할 수 있음
-- ② 로그인, 회원가입 : 사용자는 카카오,네이버를 통해 SNS 로그인을 하거나, 회원가입 후 이메일을 통해서 플랫폼에 로그인 할 수 있음.
-    일반 회원(장애인 회원), PT 강사 두 가지의 ROLE을 지니며, 강사가 게시한 강좌에 대해 
-    장애인 회원은 검색, 좋아요, 결제 등을 진행할 수 있음. 
-- ③ 데이터 저장 : 게시물, 사용자 정보, 결제 기록은 분리된 DB에 저장되고 관리 됨.
-- ④ 이미지 저장 : 프로필 이미지 혹은 게시물 이미지는 NCP의 Object Storage에 저장 됨.
-- ⑤ 실시간 양방향 채팅 : 회원과 강사 간 채팅방을 통하여 양 방향 채팅이 가능 .
-- ⑥ PT 예약 & 결제 : PG사를 통해서 강사가 게시한 강좌를 결제하고, 예약할 수 있음.
-- ⑦ 결제 푸시 알람 : 카카오톡을 통해 로그인한 회원에게는 카카오톡 메세지로, 다른 
-     사용자들에게는 메일로 결제 푸시 알람이 전송됨.
+<br />
 
-## Main Feature
+### 이와 같이 PTFD는 장애인들이 건강한 체육 문화를 형성하고, 더 나아가 보다 포용적인 사회를 구현하는데 기여하기 위해 개발된 플랫폼입니다.
 
-### 결제
-- 회원은 강사가 게시한 강좌에 대한 결제를 요청
-- Front-End에서 PG사(PortOne)의 SDK를 통해 결제를 진행
-- 해당 결제 정보는 Back-End의 Purchase부에 전달되어 검증 됨
-- 악의적 결제 내역으로 판단 시 PG사 API를 통해 해당 결제를 취소
-- 검증 후 Member 서비스 와의 통신을 통해 해당 강좌를 게시한 강사에게 현금으로 전환 가능한 포인트를 지급 
-- PG사를 통한 결제 취소를 포함한 결제 내역, 포인트 지급 내역을 모두 DB에 저장.
-- 참여 가능한 인원 수 보다 강좌를 결제한 인원 수가 많을 시 
-- Post 서비스 와의 통신을 통해 해당 게시글의 상태를 “마감”으로 변경
 
-### 채팅
-- 외부 메시지 브로커로 Redis를 사용해 실시간 채팅이 이루어짐.
-- 채팅방을 생성한 뒤 메시지 전송 시 해당 Topic을 Subscribe하고 있는 사용자들에게 메시지 전송
-- PT에 대한 채팅방은 1:N, 사용자간의 채팅방은 1:1로 구현
-- 채팅 메시지와 채팅방 데이터는 빠른 조회, 쓰기 성능을 요구하고 이미지, 동영상등의 데이터가 저장가능해야 하므로 schema-less한 NoSQL(MongoDB)를 사용해 저장됨.
+<br>
 
-## Demo
 
+
+> ### [🚀 배포 URL](http://default-front-07385-26867304-b1e33c76cd35.kr.lb.naverncp.com:30/)
+
+* 제공해드리는 계정은 테스트를 위해 생성한 계정으로써, Gmail 계정 또한 생성해 두었으니 결제 후 **Gmail에서 PTFD에 로그인하신 계정과 동일한 ID, PW 로 로그인**하여 푸시 메일 송, 수신 등을 확인하실 수 있습니다.
+
+* 현재 테스트용 결제 채널을 사용하여 게시물 결제를 진행하므로 모바일 카카오페이로 끝까지 결제하셔도 **실제 과금**이 이루어지지 않습니다.
+
+```
+장애인 회원 ROLE 계정 (gmail도 동일)
+ID: kpaasmember@gmail.com
+PW: asas1212!
+```
+
+```
+전문 강사 ROLE 계정 (gmail도 동일)
+ID: kpaasteacher@gmail.com
+PW: asas1212!
+```
+
+
+
+
+## 2.🤼 팀원 소개
+
+|FE 신민재|BE 임지혁|BE 정지현|BE 김민우|
+|:---:|:---:|:---:|:---:|
+|<img alt="민재 프로필" src="https://github.com/user-attachments/assets/ae08e409-020d-4d3d-9d6d-91b1f5babfbd" width="200" height="200">|<img width="200" height="200" alt="지혁프로필" src="https://github.com/user-attachments/assets/47a337ad-5d27-4e8d-a7bf-53ce6e6f7879">|<img width="200" height="200" alt="지현프로필" src="https://github.com/user-attachments/assets/a2f66640-dc98-4aea-827f-bcc6ad973cf3">|<img width="200" height="200" alt="민우 프로필" src="https://github.com/user-attachments/assets/254d7b40-2513-4dd4-becd-81f4b8da8104">|
+|[🔗GitHub](https://github.com/SMJ426)|[🔗GitHub](https://github.com/jihyuk0414)|[🔗GitHub](https://github.com/stophyeon)|[🔗GitHub](https://github.com/KimMinWoooo)|
+| - 프론트 담당 <br> - GitHub & NCP 형상관리 <br> - FE 파이프라인 구축 <br> - 프로젝트 노션 정리 <br>  | - 백엔드 담당  <br> - 결제 시스템 총괄  <br> - NCP 파이프라인 구축 <br> -운영 과정에서의 오류 해결 <br> -최종 보고서 작성 | - 백엔드 담당 <br> - FE BE 파이프라인 구축 <br> - 웹 소켓 통신 실시간 채팅 서비스 개발 <br> - k8s를 사용한 서비스 배포 <br> -  |- 프론트, 클라우드 담당 <br> - 프로젝트 도커 파일 제작 <br> - 클러스터 리소스 모니터링 |
+| <img alt="프론트엔드 리더" src="https://img.shields.io/badge/Frontend%20Leader-blue"><br /><img alt="커뮤니케이션 리더" src="https://img.shields.io/badge/Communication%20Leader-orange">| <img alt="팀 리더" src="https://img.shields.io/badge/Team%20Leader-yellow"><br /><img alt="백엔드" src="https://img.shields.io/badge/Backend-brightgreen"><br /> |<img alt="백엔드" src="https://img.shields.io/badge/Backend%20Leader-brightgreen"><br /><img alt="테크닉 리더" src="https://img.shields.io/badge/Technique%20Leader-blue"><br /> |<img alt="프론트엔드 리더" src="https://img.shields.io/badge/Frontend-blue"><br /><img alt="클라우드" src="https://img.shields.io/badge/Cloud%20Engineer-brightorange"><br />|
+
+
+
+
+
+## 3.⚙️ 개발 환경 및 기술 스택
+
+
+<details>
+<summary>협업 관련 링크</summary>
+<div markdown="1">
+
+- [🔗노션링크](https://www.notion.so/2024-K-PaaS-107d0c54f6584e0986f06522423c37e1?pvs=4)
+
+</div>
+</details>
+
+
+### 기술 스택
+
+<table>
+<tr>
+ <td align="center">Frontend</td>
+ <td>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>&nbsp 
+  <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/>&nbsp
+  <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/>&nbsp
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>&nbsp
+  <img src="https://img.shields.io/badge/Axios-white?style=for-the-badge&logo=Axios&logoColor=black"/>&nbsp 
+  <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/>&nbsp 
+  <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>&nbsp 
+ </td>
+</tr>
+  
+<tr>
+  <td align="center">Backend</td>
+  <td>
+    <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Spring_data_jpa-6DB33F?style=for-the-badge&logo=SpringSecurity&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Spring_cloud-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Spring_cloud_Gateway-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Spring_webflux-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/stomp-000000?style=for-the-badge&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/SMTP-000000?style=for-the-badge&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+
+<tr>
+  <td align="center">Cloud</td>
+  <td>
+    <img src="https://img.shields.io/badge/docker-257bd6?style=for-the-badge&logo=docker&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Ncloud Kubernetes Service-03C75A?style=for-the-badge&logo=naver&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+
+<tr>
+  <td align="center">DataBase</td>
+  <td>
+    <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/-MongoDB-13aa52?style=for-the-badge&logo=mongodb&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+
+<tr>
+  <td align="center">Storage</td>
+  <td>
+    <img src="https://img.shields.io/badge/NCP Object Storage-03C75A?style=for-the-badge&logo=naver&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+
+<tr>
+  <td align="center">API</td>
+  <td>
+    <img src="https://img.shields.io/badge/kakao map api-FFCD00?style=for-the-badge&logo=kakao&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/공공 데이터 포털 API(대한장애인체육회_장애인전용체육시설 API)-000000?style=for-the-badge&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/PortOne API(PG사)-000000?style=for-the-badge&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+
+<tr>
+  <td align="center">Monitoring</td>
+  <td>
+    <img src="https://img.shields.io/badge/Grafana-F46800?style=flat-square&logo=Grafana&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+
+<tr>
+  <td align="center">CI/CD</td>
+  <td>
+    <img src="https://img.shields.io/badge/NCP Source Build-03C75A?style=for-the-badge&logo=naver&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/NCP Object Container Registry-03C75A?style=for-the-badge&logo=naver&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/NCP Object Source Deploy-03C75A?style=for-the-badge&logo=naver&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/NCP Object Source Pipe Line-03C75A?style=for-the-badge&logo=naver&logoColor=white"/>&nbsp 
+  </td>
+</tr>
+  
+<tr>
+ <td align="center">Cooperation</td>
+ <td>
+    <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp 
+    <img src="https://img.shields.io/badge/Notion-5a5d69?style=for-the-badge&logo=Notion&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/Discord-4263f5?style=for-the-badge&logo=Discord&logoColor=white"/>&nbsp 
+ </td>
+</tr>
+
+<tr>
+ <td align="center">IDE</td>
+ <td>
+    <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/Intellij%20Idea-000?logo=intellij-idea&style=for-the-badge"/>
+</tr>
+
+</table>
+
+
+<br>
+
+
+## 4.🖼 PTFD의 아키텍쳐 구성도
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/3e072526-e110-4bf1-ac60-e55748ace9d4" alt="아키텍쳐 구성도" align="center"/>
+</div>
+
+
+
+
+
+## 5.🔧 PTFD의 화면 구성도
+
+**자세한 시연 영상은 유튜브 영상에 올려두었습니다.**
+[유튜브 바로 가기](https://www.youtube.com/watch?v=BoYDCTwNoFg)
+
+<br />
+
+|메인 페이지|강사/회원 로그인 페이지|
+|---|---|
+|<img width="600" height="320" src="https://github.com/user-attachments/assets/3fa650db-79ce-4756-92e9-e90989891b51">|<img width="600" height="320" src="https://github.com/user-attachments/assets/1000dc62-2943-4798-9041-603176e9e6ac">|
+
+<br />
+
+|회원가입 페이지|PT 강좌 목록 패이지|
+|---|---|
+|<img width="600" height="320" src="https://github.com/user-attachments/assets/f38427f8-7fbe-4891-9591-36330a4a193e">|<img width="600" height="320" src="https://github.com/user-attachments/assets/b6fd3ad0-671b-4602-857f-6064188a9d18">|
+
+<br />
+
+|PT 강좌 검색|PT 강좌 상세 페이지|
+|---|---|
+|<img width="600" height="320" src="https://github.com/user-attachments/assets/c75ece74-85f9-49f2-bdaa-aebaad644a2c">|<img width="600" height="320" src="https://github.com/user-attachments/assets/175b0ff9-17f9-42e9-be4a-d722f0722a2f">|
+
+<br />
+
+|PT 강좌 등록 페이지|개인 프로필 페이지|
+|---|---|
+|<img width="600" height="320" src="https://github.com/user-attachments/assets/d368d416-319e-401f-9442-ea3243b36612">|<img width="600" height="320" src="https://github.com/user-attachments/assets/f4d9fca8-cc6f-4a7a-912f-3e2227c26161">|
+
+<br />
+
+|장바구니 페이지|결제 페이지|
+|---|---|
+|<img width="600" height="320" src="https://github.com/user-attachments/assets/0d4ec23c-c8e8-4fb0-9f2b-52a62573ac4c">|<img width="600" height="320" src="https://github.com/user-attachments/assets/0e993a90-9997-4698-942b-96d58524276c">|
+
+<br />
+
+|채팅 페이지 (1:1, 단체채팅)|강사 및 회원 검색 페이지|
+|---|---|
+|<img width="600" height="320" src="https://github.com/user-attachments/assets/36d55e1a-aaba-408f-b2bc-db832bc2a635">|<img width="600" height="320" src="https://github.com/user-attachments/assets/b174ad5c-0ec5-45e8-bcdd-139da1bfd251">|
+
+<br />
 
