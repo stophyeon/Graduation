@@ -40,29 +40,26 @@ public class MemberService {
     private final JwtProvider jwtProvider;
     private final TokenRepository tokenRepository;
     private final NcpStorageService ncpStorageService;
-
+    private final MemberValidationService memberValidationService;
+    private final ProfileImageService profileImageService;
 
     @Transactional
     public SignUpRes join(MemberDto memberDto, MultipartFile profileImg) throws IOException {
             if(!profileImg.isEmpty()){
-                // ncp로 변경
                 String file_name=ncpStorageService.imageUpload(profileImg);
                 memberDto.setProfileImage(file_name);
             }
-            if(duplicateEmail(memberDto.getEmail())){
-                return SignUpRes.builder().message("이미 가입된 회원입니다").state("중복 가입").build();
-            }
-            if (duplicateNickName(memberDto.getNickName())) {
-            return SignUpRes.builder().message("이미 사용 중인 닉네임입니다").state("중복 닉네임").build();
-            } //이 부분이 , 그떄 작성만되고 적용이 안되어있었습니다. 추가했습니다!
-            memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 
+            SignUpRes res=memberValidationService.validateEmailAndNickName(memberDto);
+            if(res!=null) return res;
+
+            memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
             memberDto.setSocialType(0);
 
-            Member member = Member.builder()
+            memberRepository.save(Member.builder()
                     .memberDto(memberDto)
-                    .build();
-            memberRepository.save(member);
+                    .build());
+
             return SignUpRes.builder()
                     .message("회원가입 되었습니다")
                     .state("처리 성공")
@@ -118,14 +115,6 @@ public class MemberService {
         return member.map(Member::getProfileImage).orElse(null);
     }
 
-    public boolean duplicateNickName(String nickName){
-        return memberRepository.findByNickName(nickName).isPresent();
-    }
-
-    public boolean duplicateEmail(String email){
-        return memberRepository.existsByEmail(email);
-    }
-
     public String getNickName(String email){
         Optional<Member> member = memberRepository.findByEmail(email);
         return member.map(Member::getNickName).orElse(null);
@@ -133,13 +122,14 @@ public class MemberService {
     }
 
     public ExceptionResponse updateProfile(MultipartFile profileImg, MemberDto memberDto, String email) throws IOException {
-        Optional<Member> member = memberRepository.findByEmail(email);
-        member.orElseThrow();
-        String file_name= ncpStorageService.imageUpload(profileImg);
-        memberDto.setProfileImage(file_name);
-        //주석 처리 부는, ncp로 기존 gcp를 변경한 것입니다.
-        ncpStorageService.imageDelete(email);
+        Member member = memberRepository.findByEmail(email).orElseThrow();
+
+        String fileName = profileImageService.uploadProfileImage(profileImg);
+        profileImageService.deleteProfileImage(member.getProfileImage());
+
+        memberDto.setProfileImage(fileName);
         memberRepository.updateInfo(Member.builder().memberDto(memberDto).build());
+
         return ExceptionResponse.builder()
                 .state("success")
                 .message("회원 정보 수정에 성공했습니다.")

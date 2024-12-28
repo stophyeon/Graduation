@@ -10,37 +10,28 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class MemberDto {
+public class MemberDto implements MemberInterface{
     @Email
-    private String email;
-
-    private String userName;
-
-    private String password;
-
-    private String profileImage;
-
-    private String nickName;
-    private int point;
-    private int follower;
-    private int following;
-    private int socialType;
-    private String memberInfo;
-    private String role;
+    protected String email;
+    protected String userName;
+    protected String password;
+    protected String profileImage;
+    protected String nickName;
+    protected int socialType;
+    protected String memberInfo;
+    protected String role;
 
     @Builder
-    public MemberDto(String role,String memberInfo,String email, String nickName, String profileImage, String userName, String password, int follower, int following, int point, int socialType){
+    public MemberDto(String role,String memberInfo,String email, String nickName, String profileImage, String userName, String password, int socialType){
         this.email=email;
         this.nickName=nickName;
         this.profileImage = profileImage;
         this.userName=userName;
         this.password=password;
-        this.follower=follower;
-        this.following=following;
-        this.point=point;
         this.socialType = socialType;
         this.memberInfo= memberInfo;
         this.role=role;
     }
+
 
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.example.dto.member.MemberDetailDto;
 import org.example.dto.member.MemberDto;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -41,13 +42,26 @@ public class Member {
         this.nickName= memberDto.getNickName();
         this.userName= memberDto.getUserName();
         this.profileImage =memberDto.getProfileImage();
+        this.socialType = memberDto.getSocialType();
+        this.memberInfo=memberDto.getMemberInfo();
+        this.role=memberDto.getRole();
+    }
+
+    @Builder
+    public Member(MemberDetailDto memberDto){
+        this.email=memberDto.getEmail();
+        this.password= memberDto.getPassword();
+        this.nickName= memberDto.getNickName();
+        this.userName= memberDto.getUserName();
+        this.profileImage =memberDto.getProfileImage();
         this.point= memberDto.getPoint();
         this.socialType = memberDto.getSocialType();
         this.memberInfo=memberDto.getMemberInfo();
         this.role=memberDto.getRole();
     }
-    public static MemberDto toDto(Member member){
-        return MemberDto.builder()
+
+    public static MemberDetailDto toDto(Member member){
+        return MemberDetailDto.builder()
                 .email(member.getEmail())
                 .userName(member.getUserName())
                 .nickName(member.getNickName())

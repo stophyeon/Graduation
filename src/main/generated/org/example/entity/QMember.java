@@ -25,8 +25,6 @@ public class QMember extends EntityPathBase<Member> {
 
     public final NumberPath<Integer> following = createNumber("following", Integer.class);
 
-    public final ComparablePath<Character> gender = createComparable("gender", Character.class);
-
     public final NumberPath<Long> memberId = createNumber("memberId", Long.class);
 
     public final StringPath memberInfo = createString("memberInfo");
