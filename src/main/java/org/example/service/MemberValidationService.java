@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class MemberValidationService {
     private final MemberRepository memberRepository;
 
-
     public SignUpRes validateEmailAndNickName(MemberDto memberDto){
         if(duplicateEmail(memberDto.getEmail())){
             return SignUpRes.builder().message("이미 가입된 회원입니다").state("중복 가입").build();
